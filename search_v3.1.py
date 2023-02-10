@@ -22,9 +22,7 @@ class SearchApp(App):
         vid_path = 'video1.mp4'
         self.capture = cv2.VideoCapture(vid_path)
         # load model
-        self.detector = Detector('./weights/yolov6n_model.tflite', use_cuda=True).start()
-        # self.detector = Detector('./weights/yolox_tiny_model.tflite', use_cuda=True).start()
-        
+        self.detector = Detector('./weights/yolov6n_model.tflite').start()
 
         self.fps = 0
         self.frame_count = 0
