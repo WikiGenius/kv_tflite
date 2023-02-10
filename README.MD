@@ -4,7 +4,7 @@
 This project demonstrates how to build a mobile application for object detection using the Kivy framework and TensorFlow Lite. The application utilizes a pre-trained TensorFlow Lite model to perform object detection on an image captured by the device camera.
 
 ## Requirements
-- Python 3.x
+- Python 3.8
 - Kivy
 - TensorFlow
 - TensorFlow Lite
