@@ -1,3 +1,7 @@
+# Author: Muhammed Elyamani
+# Date: 03/02/2023
+# GitHub: https://github.com/WikiGenius
+
 import tensorflow as tf
 from onnx_tf.converter import convert
 import os

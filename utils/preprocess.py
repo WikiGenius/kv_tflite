@@ -1,3 +1,7 @@
+# Author: Muhammed Elyamani
+# Date: 03/02/2023
+# GitHub: https://github.com/WikiGenius
+
 import cv2
 import numpy as np
 
