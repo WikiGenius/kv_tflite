@@ -37,6 +37,8 @@ class SearchApp(App):
         if self.filter_classes:
             self.filter_classes = self.filter_classes.split(',')
 
+    def on_stop(self):
+        self.detector.stop()    
         
     def update(self, *args):
         ret, frame = self.capture.read()
@@ -45,7 +47,7 @@ class SearchApp(App):
             return
         frame = imutils.resize(frame, width=600)
         
-        frame =  self.detector.detect(frame,  conf_thres=0.25, iou_thres=0.45, frame_count=self.frame_count, skip_frame = 5, filter_classes=self.filter_classes)
+        frame =  self.detector.detect(frame,  conf_thres=0.25, iou_thres=0.45, frame_count=self.frame_count, skip_frame = 1, filter_classes=self.filter_classes)
         
         buf = cv2.flip(frame, 0).tobytes()
         img_texture = Texture.create(size = (frame.shape[1], frame.shape[0]), colorfmt='bgr')
