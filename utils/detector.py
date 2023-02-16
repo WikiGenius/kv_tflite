@@ -33,22 +33,23 @@ class Detector:
     def update_detection(self):
         while True:
             if not self.stopped:
-
-                if self.frame_count % self.skip_frame == 0:
-                    prevTime = time.time()
-                    im,  self.ratio, self.dwdh = preprocess(self.img, self.input_shape)
-                    # predict the model
-                    self.model.set_tensor(self.input_details[0]['index'], im)
-                    self.model.invoke()
-                    # The function `get_tensor()` returns a copy of the tensor data.
-                    # Use `tensor()` in order to get a pointer to the tensor.
-                    self.output_data = self.model.get_tensor(
-                        self.output_details[0]['index'])
-                    currTime = time.time()
-                    self.fps = 1 / (currTime - prevTime)
-                    self.detect_started = True
+                self.detection_process()
                     
-
+    def detection_process(self):
+        if self.frame_count % self.skip_frame == 0:
+            prevTime = time.time()
+            im,  self.ratio, self.dwdh = preprocess(self.img, self.input_shape)
+            # predict the model
+            self.model.set_tensor(self.input_details[0]['index'], im)
+            self.model.invoke()
+            # The function `get_tensor()` returns a copy of the tensor data.
+            # Use `tensor()` in order to get a pointer to the tensor.
+            self.output_data = self.model.get_tensor(
+                self.output_details[0]['index'])
+            currTime = time.time()
+            self.fps = 1 / (currTime - prevTime)
+            self.detect_started = True
+            
     def detect(self, img, conf_thres=0.25, iou_thres=0.45, frame_count=0, skip_frame=10, filter_classes=None):
         self.img = img
         self.conf_thres = conf_thres
@@ -57,7 +58,12 @@ class Detector:
         self.skip_frame = skip_frame
         self.filter_classes = filter_classes
         self.stopped = False
-        time.sleep(0.05)
+        if not self.thread_detect:
+            self.detection_process()
+        else:
+            time.sleep(0.05)
+            pass
+            
         if self.detect_started :
             img = draw_boxes(img, self.ratio, self.dwdh, self.output_data,
                              conf_thres, filter_classes=filter_classes)
