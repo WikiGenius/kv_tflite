@@ -4,7 +4,7 @@
 
 from utils.draw_boxes import draw_boxes
 from utils.model import get_model
-from utils.preprocess import preprocess
+from utils.preprocess import preprocess, resize
 from utils.detector import Detector
 import random
 random.seed(0)
@@ -21,3 +21,4 @@ NAMES = ['person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', '
 
 #Creating random colors for bounding box visualization.
 COLORS = {name:[random.randint(0, 255) for _ in range(3)] for i,name in enumerate(NAMES)}
+

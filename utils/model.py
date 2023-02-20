@@ -7,12 +7,11 @@ import tensorflow as tf
 
 def get_model(model_path, edgetpu = False, num_threads = None):
     
-    # try:  # https://coral.ai/docs/edgetpu/tflite-python/#update-existing-tf-lite-code-for-the-edge-tpu
-        # from tflite_runtime.interpreter import Interpreter, load_delegate
-    # except ImportError:
-        # import tensorflow as tf
-        # Interpreter, load_delegate = tf.lite.Interpreter, tf.lite.experimental.load_delegate,
-    Interpreter, load_delegate = tf.lite.Interpreter, tf.lite.experimental.load_delegate,
+    try:  # https://coral.ai/docs/edgetpu/tflite-python/#update-existing-tf-lite-code-for-the-edge-tpu
+        from tflite_runtime.interpreter import Interpreter, load_delegate
+    except ImportError:
+        import tensorflow as tf
+        Interpreter, load_delegate = tf.lite.Interpreter, tf.lite.experimental.load_delegate
     if edgetpu:  # TF Edge TPU https://coral.ai/software/#edgetpu-runtime
         print(f'Loading {model_path} for TensorFlow Lite Edge TPU inference...')
         delegate = {
