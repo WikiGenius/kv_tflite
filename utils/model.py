@@ -3,7 +3,6 @@
 # GitHub: https://github.com/WikiGenius
 
 import platform
-import tensorflow as tf
 
 def get_model(model_path, edgetpu = False, num_threads = None):
     

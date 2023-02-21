@@ -1,4 +1,5 @@
 # Import packages
+import os
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
@@ -7,9 +8,13 @@ import cv2
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from utils import Detector, resize
+from kivy import platform
+if platform == "android":
+    from android.permissions import Permission, request_permissions
+    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
 Builder.load_file('searchv3.1.kv')
-Window.size = (350, 600)
+# Window.size = (350, 600)
 
 class SearchDashboard(BoxLayout):
     pass
@@ -19,9 +24,12 @@ class SearchApp(App):
         Window.clearcolor=(0,0,0.2)
         self.search = SearchDashboard()
         vid_path = './assets/videos/video2.mp4'
+        print(f"Is the video existed: {os.path.isfile(vid_path)}")
         self.capture = cv2.VideoCapture(vid_path)
         # load model
-        self.detector = Detector('./assets/weights/yolov6n_model.tflite').start()
+        model_path='./assets/weights/yolov6n_model.tflite'
+        print(f"Is the model existed: {os.path.isfile(model_path)}")
+        self.detector = Detector(model_path).start()
 
         self.fps = 0
         self.frame_count = 0
@@ -43,8 +51,9 @@ class SearchApp(App):
         ret, frame = self.capture.read()
         if not ret:
             self.detector.stop()
+            print("stopped reading")
             return
-        frame = resize(frame, width=600)
+        # frame = resize(frame, width=600)
         
         frame =  self.detector.detect(frame,  conf_thres=0.25, iou_thres=0.45, frame_count=self.frame_count, skip_frame = 1, filter_classes=self.filter_classes)
         

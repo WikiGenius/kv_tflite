@@ -3,3 +3,7 @@ mobile-tflite
 mobile_tflite
 data
 factory.ipynb
+bin
+debug.txt
+recipes.txt
+.buildozer
