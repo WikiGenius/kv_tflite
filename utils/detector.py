@@ -2,23 +2,24 @@
 # Date: 03/02/2023
 # GitHub: https://github.com/WikiGenius
 
+# Import necessary libraries
 from threading import Thread
 from utils import draw_boxes, get_model, preprocess
 import time
 import cv2
 
-
+# Define the Detector class
 class Detector:
     def __init__(self, model_tflite_path, use_cuda=False):
+        # Initialize variables
         self.use_cuda = use_cuda
-        self.model, self.input_details, self.output_details = get_model(
-            model_tflite_path)
+        self.model, self.input_details, self.output_details = get_model(model_tflite_path)
         self.input_shape = self.input_details[0]['shape'][2:]
         self.output_data = []
-        # Variable to control when model is stopped
-        self.stopped = True
+        self.stopped = True # Variable to control when model is stopped
         self.detect_started = False
         self.thread_detect = False
+
         
     def start(self):
         # Start the thread that update_detection
@@ -26,14 +27,17 @@ class Detector:
         Thread(target=self.update_detection, args=(), daemon=True).start()
         return self
 
+
     def stop(self):
         # Indicate that the camera and thread should be stopped
         self.stopped = True
+
         
     def update_detection(self):
         while True:
             if not self.stopped:
                 self.detection_process()
+
                     
     def detection_process(self):
         if self.frame_count % self.skip_frame == 0:
@@ -42,13 +46,11 @@ class Detector:
             # predict the model
             self.model.set_tensor(self.input_details[0]['index'], im)
             self.model.invoke()
-            # The function `get_tensor()` returns a copy of the tensor data.
-            # Use `tensor()` in order to get a pointer to the tensor.
-            self.output_data = self.model.get_tensor(
-                self.output_details[0]['index'])
+            self.output_data = self.model.get_tensor(self.output_details[0]['index'])
             currTime = time.time()
             self.fps = 1 / (currTime - prevTime)
             self.detect_started = True
+
             
     def detect(self, img, conf_thres=0.25, iou_thres=0.45, frame_count=0, skip_frame=10, filter_classes=None):
         self.img = img

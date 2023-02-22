@@ -13,7 +13,7 @@ package.domain = org.finder
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,tflite,mp4
+source.include_exts = py,png,jpg,kv,atlas,tflite
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,utils
@@ -22,7 +22,7 @@ source.include_patterns = assets/*,utils
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = mobile_tflite,bin
+source.exclude_dirs = mobile_tflite,bin,assets/videos
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
