@@ -8,3 +8,4 @@ debug.txt
 recipes.txt
 .buildozer
 file_chooser_popup.py
+test*

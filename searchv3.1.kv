@@ -83,16 +83,17 @@
         pos: root.pos
         orientation: "vertical"
         FileChooserListView:
-            path: '.'
+            path: './assets/videos'
             filters:['*.mp4', '*.avi', '*.3gp', '*.mkv']
             id: filechooser
         BoxLayout:
-            size_hint_y: None
-            height: 30
+            size_hint_y: 0.1
+            # height: 30
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
-
+                font_size:30
             Button:
                 text: "Load"
                 on_release: app.load(filechooser.path, filechooser.selection[0])
+                font_size:30

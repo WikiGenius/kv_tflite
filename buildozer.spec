@@ -13,7 +13,8 @@ package.domain = org.finder
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,tflite
+# source.include_exts = py,png,jpg,kv,atlas,tflite
+source.include_exts = py,png,jpg,kv,atlas,tflite,mp4
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,utils
@@ -22,7 +23,8 @@ source.include_patterns = assets/*,utils
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = mobile_tflite,bin,assets/videos
+# source.exclude_dirs = mobile_tflite,bin,assets/videos
+source.exclude_dirs = mobile_tflite,bin
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
@@ -277,7 +279,8 @@ android.logcat_filters = *:S python:D
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 # In past, was `android.arch` as we weren't supporting builds for multiple archs at the same time.
 # android.archs = arm64-v8a, armeabi-v7a
-android.archs = arm64-v8a,x86
+# android.archs = arm64-v8a,x86
+android.archs = arm64-v8a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing

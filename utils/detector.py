@@ -63,14 +63,15 @@ class Detector:
         if not self.thread_detect:
             self.detection_process()
         else:
-            time.sleep(0.05)
+            # time.sleep(0.02)
             pass
             
         if self.detect_started :
             img = draw_boxes(img, self.ratio, self.dwdh, self.output_data,
                              conf_thres, filter_classes=filter_classes)
-            cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
-            cv2.putText(img, f'FPS: {int(self.fps)}', (11, 35), 0, 1, [
+            if not self.thread_detect:
+                cv2.line(img, (20, 25), (127, 25), [85, 45, 255], 30)
+                cv2.putText(img, f'FPS: {int(self.fps)}', (11, 35), 0, 1, [
                     225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
 
         return img
