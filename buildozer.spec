@@ -13,8 +13,8 @@ package.domain = org.finder
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,tflite
-# source.include_exts = py,png,jpg,kv,atlas,tflite,mp4
+# source.include_exts = py,png,jpg,kv,atlas,tflite
+source.include_exts = py,png,jpg,kv,atlas,tflite,mp4
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,utils
@@ -23,7 +23,7 @@ source.include_patterns = assets/*,utils
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = mobile_tflite, __pycache__, bin,assets/videos,test*
+source.exclude_dirs = mobile_tflite, __pycache__, bin,test*
 # source.exclude_dirs = mobile_tflite,bin,test*
 
 # (list) List of exclusions using pattern matching
@@ -89,7 +89,7 @@ fullscreen = 0
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
 #android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
-android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+# android.permissions =  WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, INTERNET
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host

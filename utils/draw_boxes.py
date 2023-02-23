@@ -12,7 +12,7 @@ def draw_boxes(img, ratio, dwdh, output_data, conf_thres=0.25, filter_classes=No
     for i,(batch_id,x0,y0,x1,y1,cls_id,score) in enumerate(output_data):
         cls_id = int(cls_id)
         name = utils.NAMES[cls_id]
-        score = round(float(score),3)
+        score = round(float(score),2)
         
         if filter_classes and name in filter_classes and score > conf_thres:
             box = np.array([x0,y0,x1,y1])
@@ -22,6 +22,7 @@ def draw_boxes(img, ratio, dwdh, output_data, conf_thres=0.25, filter_classes=No
             
             #Creating random colors for bounding box visualization.
             color = compute_color_for_labels(cls_id)
+            name = f"{name}  {score}"
             draw_ui_box(box, img, label=name, color=color, line_thickness=2)
     return img
 
