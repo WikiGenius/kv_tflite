@@ -1,4 +1,5 @@
 from kivy import platform
+from kivy.core.window import Window
 
 # This code block is checking if the platform running the program is Android,
 # and if so, it requests read and 
@@ -11,7 +12,6 @@ if platform == "android":
     from android.permissions import Permission, request_permissions
     request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
-if platform == 'android':
     from jnius import autoclass
     from android.runnable import run_on_ui_thread
     from android import mActivity

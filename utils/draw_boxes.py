@@ -19,9 +19,9 @@ def draw_boxes(img, ratio, dwdh, output_data, conf_thres=0.25, filter_classes=No
             box -= np.array(dwdh*2)
             box /= ratio
             box = box.round().astype(np.int32).tolist()
-            color = utils.COLORS[name]
-            # cv2.rectangle(img,box[:2],box[2:],color,2)
-            # cv2.putText(img,name,(box[0], box[1] - 2),cv2.FONT_HERSHEY_SIMPLEX,0.75,[225, 255, 255],thickness=2)  
+            
+            #Creating random colors for bounding box visualization.
+            color = compute_color_for_labels(cls_id)
             draw_ui_box(box, img, label=name, color=color, line_thickness=2)
     return img
 

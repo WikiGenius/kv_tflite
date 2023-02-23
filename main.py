@@ -4,13 +4,18 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.graphics.texture import Texture
-from utils import Detector, resize
+from utils import Detector
 from kivy import platform
+from plyer import filechooser
+from kivy.properties import ListProperty
+
 from utils.layout import *
 from utils.permissions import *
 
 
 class SearchApp(App):
+    selection = ListProperty([])
+    
     def build(self):
         # Set background color of window
         Window.clearcolor = (0, 0, 0.2)
@@ -18,8 +23,10 @@ class SearchApp(App):
         self.thread = True
         self.fps = 5
         if platform == 'android':
+            self.fps = 5
             Window.bind(on_resize=hide_landscape_status_bar)
-        
+        else:
+            self.fps = 30
         # Create instance of SearchDashboard
         self.search = SearchDashboard()
         # Load YOLOv6n model for object detection
@@ -78,28 +85,34 @@ class SearchApp(App):
         self.filter_classes = self.search.text_input.text
         if self.filter_classes:
             self.filter_classes = self.filter_classes.split(',')    
-        
-    def dismiss_popup(self):
-        # Dismiss the file chooser popup
-        self._popup.dismiss()
+    
+    def choose(self):
+        '''
+        Call plyer filechooser API to run a filechooser Activity.
+        '''
+        filters = ['*.mp4']  # add more video file extensions here
+        filechooser.open_file(filters=filters, on_selection=self.handle_selection)
 
-    def show_load(self):
-        # Show the file chooser popup to load a video
-        content = LoadFile(load=self.load, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Load file", content=content,
-                            size_hint=(0.7, 0.7))
-        self._popup.open()
+    def handle_selection(self, selection):
+        '''
+        Callback function for handling the selection response from Activity.
+        '''
+        if selection is not None:
+            self.selection = selection
 
-    def load(self, path, vid_path):
-        # Load the selected video file
-        print(vid_path)
-        print(f"Is the video existed: {os.path.isfile(vid_path)}")
-        self.start_app(vid_path, self.fps)
-        # Dismiss the file chooser popup
-        self.dismiss_popup()
+    def on_selection(self, *a, **k):
+        '''
+        Update TextInput.text after FileChoose.selection is changed
+        via FileChoose.handle_selection.
+        '''
+        vid_path = self.selection[0]
+        self.start_app(vid_path, self.fps) 
+
         
     def start_app(self, vid_path, fps=10):
         # Create a video capture object for the selected video file
+        print(f'load file: {vid_path}')
+        print(f'file exist: {os.path.isfile(vid_path)}')
         self.capture = cv2.VideoCapture(vid_path)
         # Schedule the update function to be called at 33 FPS
         Clock.schedule_interval(self.update, 1/fps)

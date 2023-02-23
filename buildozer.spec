@@ -13,8 +13,8 @@ package.domain = org.finder
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-# source.include_exts = py,png,jpg,kv,atlas,tflite
-source.include_exts = py,png,jpg,kv,atlas,tflite,mp4
+source.include_exts = py,png,jpg,kv,atlas,tflite
+# source.include_exts = py,png,jpg,kv,atlas,tflite,mp4
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,utils
@@ -23,8 +23,8 @@ source.include_patterns = assets/*,utils
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-# source.exclude_dirs = mobile_tflite,bin,assets/videos
-source.exclude_dirs = mobile_tflite,bin
+source.exclude_dirs = mobile_tflite,bin,assets/videos
+# source.exclude_dirs = mobile_tflite,bin,test*
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,numpy,opencv,tflite-runtime 
+requirements = python3, kivy, plyer,numpy, android, Pillow, opencv, tflite-runtime 
 
 
 # (str) Presplash of the application
@@ -89,7 +89,7 @@ fullscreen = 0
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
 #android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
-android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
+android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
