@@ -49,15 +49,12 @@ class SearchApp(App):
         self.detector.stop()    
         
     def update(self, *args):
-        print("Update")
         # Read a frame from the video capture device
         ret, frame = self.capture.read()
         # Stop the detector if there are no more frames
         if not ret:
-            print("Not")
             self.detector.stop()
             return
-        print("Yes")
         # Perform object detection on the frame using the YOLOv6n model
         frame =  self.detector.detect(frame,  conf_thres=0.25, iou_thres=0.45, frame_count=self.frame_count, skip_frame = 1, filter_classes=self.filter_classes)
         if self.thread:
@@ -65,11 +62,6 @@ class SearchApp(App):
             cv2.putText(frame, f'FPS: {int(self.fps)}', (11, 35), 0, 1, [
                     225, 255, 255], thickness=2, lineType=cv2.LINE_AA)
         # Flip the frame vertically for display purposes
-        print(frame.shape)
-        print(frame.min())
-        print(frame.max())
-        print(frame)
-        print("===================================")
         buf = cv2.flip(frame, 0).tobytes()
         # Create a Kivy Texture from the frame
         
@@ -106,8 +98,6 @@ class SearchApp(App):
         self._popup.open()
     def load(self, path, vid_path):
         # Load the selected video file
-        print(vid_path)
-        print(f"Is the video existed: {os.path.isfile(vid_path)}")
         self.start_app(vid_path)
         # Dismiss the file chooser popup
         self.dismiss_popup()
